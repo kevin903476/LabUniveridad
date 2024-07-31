@@ -14,7 +14,7 @@ if(isset($_POST['nueva_contra']) && isset($_POST['confirmar_contra'])) {
 
         if ($update) {
             echo 'Contraseña actualizada';
-            header('Location: ../ventanaAdmin.php');
+            header('Location: ../login.php');
         } else {
             echo 'Error al actualizar la contraseña';
         }
