@@ -10,7 +10,7 @@
 
     <div class="container">
         <div class="caja-form">
-            <p>Cambiar Contraseña</p>
+            <p class="etiqueta">Cambiar Contraseña</p>
             <form action="./includes/updatpass.php" method="POST">
                 
                 <section class="cajas-form">

@@ -11,7 +11,7 @@
 
     <div class="container">
         <div class="caja-form">
-            <p>LOGIN</p>
+            <p class="etiqueta">LOGIN</p>
             <form action="./includes/personaLogin.php" method="POST">
                 
                 <section class="cajas-form">
@@ -31,7 +31,9 @@
                     <button type="submit">Ingresar</button>
                 </section>
             </form>
-
+            <br>
+            <p id="mensaje">Si es la primera vez que ingresas la contraseña es 'password123'</p>
+            <br>
         </div>
     
     </div>

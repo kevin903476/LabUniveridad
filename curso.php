@@ -9,7 +9,7 @@
 <body>
 <div class="container">
         <div class="caja-form">
-            <p>Curso</p>
+            <p class="etiqueta">Curso</p>
             <form action="./includes/insertarCurso.php" method="POST">
                 
                 <section class="cajas-form">
