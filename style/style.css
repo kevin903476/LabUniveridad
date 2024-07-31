@@ -61,7 +61,7 @@ form button{
     color: #b0d6ea;
     width: 43%;
 }
-.caja-form p{
+.etiqueta{
     margin-bottom: 13%;
     background-color: #b0d6ea;
     width: 100px;
@@ -103,4 +103,11 @@ form button{
 }
 .caja-boton:hover{
     transform: scale(1.1);
+}
+#mensaje{
+    color: #27313e;
+    font-size: 12px;
+    background-color: transparent;
+    width: 90%;
+    text-align: center;
 }

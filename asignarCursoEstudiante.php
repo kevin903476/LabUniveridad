@@ -10,7 +10,7 @@
 <body>
     <div class="container">
         <div class="caja-form">
-            <p>Estudiante</p>
+            <p class="etiqueta">Estudiante</p>
             <form action="./includes/agregarEstudianteCurso.php" method="post">
                 
                 <section class="cajas-form">

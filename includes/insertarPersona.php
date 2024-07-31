@@ -24,12 +24,12 @@
         }
         
 
-        if( $val_ced == true && $val_nom == true && $val_tel == true && $val_contra == true ){
+        if( $val_ced == true && $val_nom == true && $val_tel == true ){
             $rolNum = intval($rol);
             $sql="INSERT INTO persona VALUES(null,'$cedula','$nombre', '$telefono',DEFAULT, '$rolNum');" ;
             $insertar=mysqli_query($connect,$sql);
             echo 'usuario registrado';
-            header('Location:../login.php');
+            header('Location:../ventanaAdmin.php');
         }else{
             echo 'campo erroneo';
             echo '<br>';

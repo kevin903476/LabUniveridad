@@ -10,7 +10,7 @@
 <body>
     <div class="container">
         <div class="caja-form">
-            <p>REGISTRO</p>
+            <p class="etiqueta">REGISTRO</p>
             <form action="./includes/insertarPersona.php" method="post">
                 
                 <section class="cajas-form">
