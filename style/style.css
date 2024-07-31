@@ -15,7 +15,7 @@ body{
 
 .caja-form{
     background-color: #5993a5;
-    margin-top: 10%;
+    margin-top: 3%;
     margin-bottom: 10%;
     width: 400px;
     height: 100%;
@@ -71,4 +71,36 @@ form button{
     border-bottom-right-radius: 15px;
     color: #26323b;
     padding-top: 10px;
+}
+
+
+#caja-botones-admin{
+   
+    display: flex;
+    flex-direction: row;
+    align-items: center; 
+    justify-content: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    width: 40%;
+}
+.caja-boton{
+    margin-top: 7%; 
+    background-color: #5993a5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    color: #b0d6ea;
+    border-radius: 15px;
+    transition: all 200ms;
+    width: 35%;
+    
+}
+.caja-boton p{
+    font-size: 20px;
+}
+.caja-boton:hover{
+    transform: scale(1.1);
 }
