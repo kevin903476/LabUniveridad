@@ -14,13 +14,20 @@ if(isset($_POST['cedula']) && isset($_POST['contra'])) {
 
         if ($pass == $usuario['contra']) {
             $_SESSION['persona'] = $usuario;
-            $_SESSION['login'] = 1;
 
             if ($usuario['contra'] == 'password123') {
                 header('Location: ../actualizarContra.php');
             } else {
                 echo 'usuario logueado';
-                header('Location: ../ventanaAdmin.php');
+                if ($usuario['rol'] == 1) {
+                    header('Location: ../ventanaAdmin.php');
+                }else if ($usuario['rol'] == 2) {
+                    header('Location: ../ventanaProfesor.php');
+                } else if ($usuario['rol'] == 3) {
+                    header('Location: ../ventanaEstudiante.php');
+                }
+                
+                
             }
         } else {
             $_SESSION['error-login'] = "DATOS INCORRECTOS";
