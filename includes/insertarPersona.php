@@ -4,7 +4,6 @@
         $cedula = isset($_POST['cedula']) ? $_POST['cedula'] : false;
         $nombre = isset($_POST['nombre']) ? $_POST['nombre'] : false;
         $telefono = isset($_POST['telefono']) ? $_POST['telefono'] : false;
-        $contra = isset($_POST['contra']) ? $_POST['contra'] : false;
         $rol = isset($_POST['rol']) ? $_POST['rol'] : false;
         
         $errores = array();
@@ -23,15 +22,11 @@
         } else {
             $errores['telefono'] = "Telefono incorrecto ";
         }
-        if (!empty($contra)) {
-            $val_contra = true;
-        } else {
-            $errores['contra'] = "Contraseña vacia ";
-        }
+        
 
         if( $val_ced == true && $val_nom == true && $val_tel == true && $val_contra == true ){
             $rolNum = intval($rol);
-            $sql="INSERT INTO persona VALUES(null,'$cedula','$nombre', '$telefono','$contra', '$rolNum');" ;
+            $sql="INSERT INTO persona VALUES(null,'$cedula','$nombre', '$telefono',DEFAULT, '$rolNum');" ;
             $insertar=mysqli_query($connect,$sql);
             echo 'usuario registrado';
             header('Location:../login.php');

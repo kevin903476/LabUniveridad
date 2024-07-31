@@ -36,12 +36,6 @@
                 <br>
                 <section class="cajas-form">
                     <label for="">
-                        Contraseña
-                    </label>
-                    <input type="password" name="contra" required>
-                </section>
-                <section class="cajas-form">
-                    <label for="">
                         Rol
                     </label>
                     <select name="rol">

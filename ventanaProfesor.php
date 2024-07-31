@@ -1,5 +1,5 @@
 <?php
-require_once 'conexion.php';
+require_once './includes/conexion.php';
 session_start();
 
 if (!isset($_SESSION['persona']) || $_SESSION['persona']['rol'] != 2) {
@@ -22,7 +22,7 @@ $cursos = [];
 
 if ($resultado_cursopersona->num_rows > 0) {
     while ($fila_cursopersona = $resultado_cursopersona->fetch_assoc()) {
-        $idCurso = $fila_cursopersona['idCurso'];
+        $idCurso = $fila_cursopersona['IdCurso'];
 
         
         $sql_estudiantes = "SELECT idPersona FROM cursopersona WHERE IdCurso = '$idCurso' AND estado = '1' AND idPersona != '$idPersona'";

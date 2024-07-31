@@ -1,5 +1,5 @@
 <?php
-require_once 'conexion.php';
+require_once './includes/conexion.php';
 session_start();
 
 if (!isset($_SESSION['persona']) || $_SESSION['persona']['rol'] != 3) {
@@ -22,10 +22,10 @@ $cursos = [];
 
 if ($resultado_cursopersona->num_rows > 0) {
     while ($fila_cursopersona = $resultado_cursopersona->fetch_assoc()) {
-        $idCurso = $fila_cursopersona['idCurso'];
+        $idCurso = $fila_cursopersona['IdCurso'];
 
         
-        $sql_curso = "SELECT nombre, CodigoCurso FROM curso WHERE idCurso = '$idCurso'";
+        $sql_curso = "SELECT nombreCurso, CodigoCurso FROM curso WHERE IdCurso = '$idCurso'";
         $resultado_curso = $connect->query($sql_curso);
 
         if ($resultado_curso->num_rows > 0) {
@@ -57,8 +57,8 @@ if ($resultado_cursopersona->num_rows > 0) {
                     </tr>
                     <?php foreach ($cursos as $curso) : ?>
                         <tr>
-                            <td><?php echo $curso['codigo_curso']; ?></td>
-                            <td><?php echo $curso['nombre']; ?></td>
+                            <td><?php echo $curso['CodigoCurso']; ?></td>
+                            <td><?php echo $curso['nombreCurso']; ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </table>
