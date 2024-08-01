@@ -14,7 +14,6 @@ if ($connect->connect_error) {
     die("Error de conexión: " . $connect->connect_error);
 }
 
-
 $sql_cursopersona = "SELECT IdCurso FROM cursopersona WHERE idPersona = '$idPersona' AND estado = '1'";
 $resultado_cursopersona = $connect->query($sql_cursopersona);
 
@@ -25,20 +24,26 @@ if ($resultado_cursopersona->num_rows > 0) {
         $idCurso = $fila_cursopersona['IdCurso'];
 
         
-        $sql_estudiantes = "SELECT idPersona FROM cursopersona WHERE IdCurso = '$idCurso' AND estado = '1' AND idPersona != '$idPersona'";
-        $resultado_estudiantes = $connect->query($sql_estudiantes);
+        $sql_curso = "SELECT nombreCurso FROM curso WHERE idCurso = '$idCurso'";
+        $resultado_curso = $connect->query($sql_curso);
+        if ($resultado_curso->num_rows > 0) {
+            $fila_curso = $resultado_curso->fetch_assoc();
+            $nombreCurso = $fila_curso['nombreCurso'];
 
-        if ($resultado_estudiantes->num_rows > 0) {
-            while ($fila_estudiantes = $resultado_estudiantes->fetch_assoc()) {
-                $idEstudiante = $fila_estudiantes['idPersona'];
+            $sql_estudiantes = "SELECT idPersona FROM cursopersona WHERE IdCurso = '$idCurso' AND estado = '1' AND idPersona != '$idPersona'";
+            $resultado_estudiantes = $connect->query($sql_estudiantes);
 
-                
-                $sql_persona = "SELECT cedula, nombre, telefono FROM persona WHERE idPersona = '$idEstudiante' AND rol = '3'";
-                $resultado_persona = $connect->query($sql_persona);
+            if ($resultado_estudiantes->num_rows > 0) {
+                while ($fila_estudiantes = $resultado_estudiantes->fetch_assoc()) {
+                    $idEstudiante = $fila_estudiantes['idPersona'];
 
-                if ($resultado_persona->num_rows > 0) {
-                    $fila_persona = $resultado_persona->fetch_assoc();
-                    $cursos[$idCurso][] = $fila_persona;
+                    $sql_persona = "SELECT cedula, nombre, telefono FROM persona WHERE idPersona = '$idEstudiante' AND rol = '3'";
+                    $resultado_persona = $connect->query($sql_persona);
+
+                    if ($resultado_persona->num_rows > 0) {
+                        $fila_persona = $resultado_persona->fetch_assoc();
+                        $cursos[$nombreCurso][] = $fila_persona;
+                    }
                 }
             }
         }
@@ -47,7 +52,7 @@ if ($resultado_cursopersona->num_rows > 0) {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -56,12 +61,14 @@ if ($resultado_cursopersona->num_rows > 0) {
 </head>
 <body>
     <div class="container">
-        <h1>Bienvenido, <?php echo $nombre; ?></h1>
-        <div class="caja-form">
+        <div class="caja-tabla">
+            <h1>Bienvenido, <?php echo $nombre; ?></h1>
+            <br>
             <?php if (!empty($cursos)) : ?>
-                <?php foreach ($cursos as $idCurso => $estudiantes) : ?>
-                    <h2>Estudiantes del Curso (ID: <?php echo $idCurso; ?>)</h2>
-                    <table border='1'>
+                <?php foreach ($cursos as $nombreCurso => $estudiantes) : ?>
+                    <h2>Estudiantes del Curso: <?php echo $nombreCurso; ?></h2>
+                    <br>
+                    <table border="2">
                         <tr>
                             <th>Cédula</th>
                             <th>Nombre</th>
@@ -83,5 +90,4 @@ if ($resultado_cursopersona->num_rows > 0) {
     </div>
 </body>
 </html>
-
 <?php $connect->close(); ?>

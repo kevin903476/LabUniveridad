@@ -14,7 +14,7 @@ if ($connect->connect_error) {
     die("Error de conexión: " . $connect->connect_error);
 }
 
-
+// Obtener los cursos asignados al estudiante y los profesores asignados a esos cursos
 $sql_cursopersona = "SELECT IdCurso FROM cursopersona WHERE idPersona = '$idPersona' AND estado = '1'";
 $resultado_cursopersona = $connect->query($sql_cursopersona);
 
@@ -24,8 +24,12 @@ if ($resultado_cursopersona->num_rows > 0) {
     while ($fila_cursopersona = $resultado_cursopersona->fetch_assoc()) {
         $idCurso = $fila_cursopersona['IdCurso'];
 
-        
-        $sql_curso = "SELECT nombreCurso, CodigoCurso FROM curso WHERE IdCurso = '$idCurso'";
+        // Obtener nombre del curso y el profesor asignado
+        $sql_curso = "SELECT c.nombreCurso, c.CodigoCurso, p.nombre AS nombreProfesor 
+                      FROM curso c
+                      JOIN cursopersona cp ON c.IdCurso = cp.IdCurso
+                      JOIN persona p ON cp.idPersona = p.idPersona
+                      WHERE c.IdCurso = '$idCurso' AND p.rol = '2' AND cp.estado = '1'";
         $resultado_curso = $connect->query($sql_curso);
 
         if ($resultado_curso->num_rows > 0) {
@@ -46,19 +50,23 @@ if ($resultado_cursopersona->num_rows > 0) {
 </head>
 <body>
     <div class="container">
-        <h1>Bienvenido, <?php echo $nombre; ?></h1>
-        <div class="caja-form">
+        <div class="caja-tabla">
+            <h1>Bienvenido, <?php echo $nombre; ?></h1>
+            <br>
             <?php if (!empty($cursos)) : ?>
                 <h2>Cursos Asignados</h2>
-                <table border='1'>
+                <br>
+                <table border="2">
                     <tr>
                         <th>Código del Curso</th>
                         <th>Nombre del Curso</th>
+                        <th>Profesor</th>
                     </tr>
                     <?php foreach ($cursos as $curso) : ?>
                         <tr>
                             <td><?php echo $curso['CodigoCurso']; ?></td>
                             <td><?php echo $curso['nombreCurso']; ?></td>
+                            <td><?php echo $curso['nombreProfesor']; ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </table>
@@ -69,5 +77,6 @@ if ($resultado_cursopersona->num_rows > 0) {
     </div>
 </body>
 </html>
+
 
 <?php $connect->close(); ?>
