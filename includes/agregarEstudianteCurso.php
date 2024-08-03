@@ -33,7 +33,7 @@
                 $estId = $estE['idPersona'];
                 $cursoId = $cursoE['IdCurso'];
 
-                $sqlCursoPersona = "SELECT * FROM cursopersona WHERE idPersona = '$estId'";
+                $sqlCursoPersona = "SELECT * FROM cursopersona WHERE idPersona = '$estId' AND IdCurso = '$cursoId'";
                 $resultado = mysqli_query($connect, $sqlCursoPersona);
                 if (mysqli_num_rows($resultado) > 0) {
                     $errores['estudiante'] = "El estudiante ya fue asignado a este curso.";
