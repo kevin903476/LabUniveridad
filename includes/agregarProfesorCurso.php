@@ -1,20 +1,23 @@
 <?php 
     require_once "conexion.php";
+    session_start(); // Iniciar sesión
     if (isset($_POST)) {
         $cedula = isset($_POST['cedula']) ? $_POST['cedula'] : false;
         $codigo = isset($_POST['codigo']) ? $_POST['codigo'] : false;
-
-        
         $errores = array();
+        
+        
+        $val_cod = false; 
+        $val_ced = false; 
         if (!empty($cedula) && is_numeric($cedula) ) {
             $val_ced = true;
-        } else {
-            $errores['cedula'] = "Cedula incorrecta";
+        }else{
+            $errores['cedula'] = "Cédula incorrecta";
         }
         if (!empty($codigo) ) {
             $val_cod = true;
-        } else {
-            $errores['codigo'] = "Codigo incorrecto";
+        }else{
+            $errores['codigo'] = "Código incorrecto";
         }
         
 
@@ -28,19 +31,31 @@
                 $cursoE = mysqli_fetch_assoc($curso);
                 $profeId = $profeE['idPersona'];
                 $cursoId = $cursoE['IdCurso'];
-                $sql="INSERT INTO `cursopersona` (`IdCursoPersona`, `idPersona`, `IdCurso`, `estado`) VALUES (NULL, $profeId, $cursoId, '1');" ;
-                $insertar=mysqli_query($connect,$sql);
-                echo 'profe registrado';
-                header('Location:../ventanaAdmin.php');
+                $sqlCursoPersona = "SELECT * FROM cursopersona WHERE idPersona = '$profeId'";
+                $resultado = mysqli_query($connect, $sqlCursoPersona);
+                if (mysqli_num_rows($resultado) > 0) {
+                    $errores['profesor'] = "El profesor ya fue asignado a este curso.";
+                    $_SESSION['errores'] = $errores;
+                    header('Location: ../asignarCursoProfesor.php');
+                    exit();
+                }else{
+                    $sql="INSERT INTO `cursopersona` (`IdCursoPersona`, `idPersona`, `IdCurso`, `estado`) VALUES (NULL, $profeId, $cursoId, '1');" ;
+                    $insertar=mysqli_query($connect,$sql);
+                    echo 'profe registrado';
+                    header('Location:../ventanaAdmin.php');
+                }
+                
             }else{
-                echo '<h2>Cédula o Código incorrectos</h2>';
+                $errores['credenciales'] = "Código o Cédula incorrecto";
+                $_SESSION['errores'] = $errores;
+                header('Location: ../asignarCursoProfesor.php');
             }
 
             
         }else{
-            echo 'campo erroneo';
-            echo '<br>';
-            var_dump($errores);
+            $_SESSION['errores'] = $errores; // Guardamos los errores en la sesión
+            header('Location: ../asignarCursoProfesor.php');
+            exit();
         }
        
     }else{
