@@ -59,7 +59,15 @@ if ($resultado_cursopersona->num_rows > 0) {
     <link rel="stylesheet" href="style/style.css">
     <title>Ventana Profesor</title>
 </head>
+    <script>
+        function cerrarSesion(){
+            window.location.href = './includes/logout.php';
+        }
+    </script>
 <body>
+    <div class="cerrar">
+            <button id="cerrar-sesion" onclick="cerrarSesion()">Cerrar Sesion</button>
+    </div>
     <div class="container">
         <div class="caja-tabla">
             <h1>Bienvenido, <?php echo $nombre; ?></h1>

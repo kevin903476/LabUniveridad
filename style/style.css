@@ -149,3 +149,17 @@ form button{
     width: 90%;
     text-align: center;
 }
+
+#cerrar-sesion{
+    margin: 15px;
+    padding: 15px;
+    border-radius: 15px;
+    background-color: #5993a5;
+    color: #b0d6ea;
+    cursor: pointer;
+    transition: all 200ms;
+}
+
+#cerrar-sesion:hover{
+    transform: scale(1.1);
+}

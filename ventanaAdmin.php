@@ -3,11 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./style/style.css">
+    <link rel="stylesheet" href="./style/style copy.css">
     <title>Admin</title>
 </head>
+    <script>
+        function cerrarSesion(){
+            window.location.href = './includes/logout.php';
+        }
+    </script>
 <body>
+    <div class="cerrar">
+            <button id="cerrar-sesion" onclick="cerrarSesion()">Cerrar Sesion</button>
+    </div>
     <div class="container">
+        
         <div id="caja-botones-admin">
             <div class="caja-boton">
                 <a href="registro.php"><img src="./img/agregar-usuario.png" alt="agregar" width="150px" height="150px"></a>
