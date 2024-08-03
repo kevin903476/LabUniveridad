@@ -1,20 +1,24 @@
 <?php 
     require_once "conexion.php";
+    session_start(); 
     if (isset($_POST)) {
         $cedula = isset($_POST['cedula']) ? $_POST['cedula'] : false;
         $codigo = isset($_POST['codigo']) ? $_POST['codigo'] : false;
 
         
         $errores = array();
+
+        $val_cod = false; 
+        $val_ced = false; 
         if (!empty($cedula) && is_numeric($cedula) ) {
             $val_ced = true;
         } else {
-            $errores['cedula'] = "Cedula incorrecta";
+            $errores['cedula'] = "Cédula incorrecta";
         }
         if (!empty($codigo) ) {
             $val_cod = true;
         } else {
-            $errores['codigo'] = "Codigo incorrecto";
+            $errores['codigo'] = "Código incorrecto";
         }
         
 
@@ -26,21 +30,36 @@
             if ($estudiante && mysqli_num_rows($estudiante) >= 1 && $curso && mysqli_num_rows($curso) >= 1) {
                 $estE = mysqli_fetch_assoc($estudiante);
                 $cursoE = mysqli_fetch_assoc($curso);
-                $profeId = $estE['idPersona'];
+                $estId = $estE['idPersona'];
                 $cursoId = $cursoE['IdCurso'];
-                $sql="INSERT INTO `cursopersona` (`IdCursoPersona`, `idPersona`, `IdCurso`, `estado`) VALUES (NULL, $profeId, $cursoId, '1');" ;
-                $insertar=mysqli_query($connect,$sql);
-                echo 'estudiante registrado';
-                header('Location:../ventanaAdmin.php');
+
+                $sqlCursoPersona = "SELECT * FROM cursopersona WHERE idPersona = '$estId'";
+                $resultado = mysqli_query($connect, $sqlCursoPersona);
+                if (mysqli_num_rows($resultado) > 0) {
+                    $errores['estudiante'] = "El estudiante ya fue asignado a este curso.";
+                    $_SESSION['errores'] = $errores;
+                    header('Location: ../asignarCursoEstudiante.php');
+                    exit();
+                }else{
+                    $sql="INSERT INTO `cursopersona` (`IdCursoPersona`, `idPersona`, `IdCurso`, `estado`) VALUES (NULL, $estId, $cursoId, '1');" ;
+                    $insertar=mysqli_query($connect,$sql);
+                    echo 'estudiante registrado';
+                    header('Location:../ventanaAdmin.php');
+                }
+
+
+
             }else{
-                echo '<h2>Cédula o Código incorrectos</h2>';
+                $errores['credenciales'] = "Código o Cédula incorrecto";
+                $_SESSION['errores'] = $errores;
+                header('Location: ../asignarCursoEstudiante.php');
             }
 
             
         }else{
-            echo 'campo erroneo';
-            echo '<br>';
-            var_dump($errores);
+            $_SESSION['errores'] = $errores; // Guardamos los errores en la sesión
+            header('Location: ../asignarCursoEstudiante.php');
+            exit();
         }
        
     }else{
