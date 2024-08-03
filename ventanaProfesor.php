@@ -90,6 +90,7 @@ if ($resultado_cursopersona->num_rows > 0) {
                             </tr>
                         <?php endforeach; ?>
                     </table>
+                    <br>
                 <?php endforeach; ?>
             <?php else : ?>
                 <p>No tienes estudiantes asignados en tus cursos.</p>
