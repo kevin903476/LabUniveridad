@@ -31,7 +31,7 @@
                 $cursoE = mysqli_fetch_assoc($curso);
                 $profeId = $profeE['idPersona'];
                 $cursoId = $cursoE['IdCurso'];
-                $sqlCursoPersona = "SELECT * FROM cursopersona WHERE idPersona = '$profeId'";
+                $sqlCursoPersona = "SELECT * FROM cursopersona WHERE idPersona = '$profeId' AND IdCurso = '$cursoId'";
                 $resultado = mysqli_query($connect, $sqlCursoPersona);
                 if (mysqli_num_rows($resultado) > 0) {
                     $errores['profesor'] = "El profesor ya fue asignado a este curso.";
